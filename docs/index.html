@@ -2,9 +2,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>catch-solve-selenium-test-website</title>
 </head>
 <body>
-	hello github pages
+	<h1>Artificial pages to test selenium code</h1>
+	
+	<input id="input1" value="value1">
+	<button id="button1">click me</button>
+	<script>
+		const button1 = document.getElementById('button1');
+		const input1  = document.getElementById('input1');
+		button1.onclick = () => { 
+			button1.textContent = 'clicked!';
+			input1.value = 'button1 clicked';
+		}
+	</script>
 </body>
 </html>
