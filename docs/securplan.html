@@ -14,22 +14,34 @@
 	<input id="key_to" type="password" style="width: 99%">
 
 	<p>
-	data:
+	data: <select id="and_iph">
+		<option value="android">android</option>
+		<option value="iphone">iphone</option>
+	</select>
 	<textarea style="width: 99%; height: 12em"></textarea>
 	<p>
 	<button id="invia">invia</button>
 
 	<script>
 	
-		const  init_data = {
+		const  android_data = {
 								"to": "",
 								"data": {"body":"Body of Your Notification in Data","title":"Title of Your Notification in Title"},
 								"priority":"high"
 							}
 	
+		const  iphone_data = {
+				"to": "",
+				"data": {"critical":1},
+				 "notification":{
+				    "title":"Sparky says hello!",
+				    "mutable_content":"true"
+				    }
+			}
+
 		const t = document.querySelector('textarea');
 		
-		t.value = JSON.stringify(init_data, null, 3)
+		// t.value = JSON.stringify(init_data, null, 3)
 		
 		const b = document.querySelector('#invia');
 		
@@ -59,6 +71,15 @@
 			});
 			alert(JSON.stringify(await response.json()));
 		};
+		
+		const select = document.getElementById('and_iph');
+		
+		select.onchange = () => {
+			t.value = JSON.stringify(select.value == 'android' ? android_data : iphone_data, null, 3);
+		}
+		
+		select.onchange();
+		
 	</script>
 </body>
 </html>
