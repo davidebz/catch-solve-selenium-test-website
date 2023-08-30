@@ -15,9 +15,9 @@
 
 	<p>
 	data: <select id="and_iph">
-		<option value="android">android firebase</option>
-		<option value="iphone">iphone firebase</option>
-		<option value="android onesignal">android onesignal</option>
+		<option value="android_firebase">android firebase</option>
+		<option value="iphone_firebase">iphone firebase</option>
+		<option value="android_onesignal">android onesignal</option>
 	</select>
 	<textarea style="width: 99%; height: 12em"></textarea>
 	<p>
@@ -114,8 +114,9 @@
 		const select = document.getElementById('and_iph');
 		
 		select.onchange = () => {
+			console.log(select.value);
 			//update body
-			t.value = JSON.stringify(select.value == 'android' ? android_firebase_data : select.value == 'iphone' ? iphone_firebase_data : android_onesignal_data, null, 3);
+			t.value = JSON.stringify(select.value == 'android_firebase' ? android_firebase_data : select.value == 'iphone_firebase' ? iphone_firebase_data : android_onesignal_data, null, 3);
 		}
 		
 		select.onchange();
