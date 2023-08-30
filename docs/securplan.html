@@ -83,7 +83,7 @@
 			//get array with server key and token id (firebase) or api key, app id and subscriber id (onesignal)
 			const key_to_arr = key_to.value.split('\|')
 
-			const source = key_to_arr.length() == 2 ? "Firebase" : "OneSignal";
+			const source = key_to_arr.length == 2 ? "Firebase" : "OneSignal";
 
 			var auth = "";
 			var url = "";
