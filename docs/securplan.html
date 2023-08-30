@@ -15,16 +15,20 @@
 
 	<p>
 	data: <select id="and_iph">
-		<option value="android">android</option>
-		<option value="iphone">iphone</option>
+		<option value="android">android firebase</option>
+		<option value="iphone">iphone firebase</option>
+		<option value="android onesignal">android onesignal</option>
 	</select>
 	<textarea style="width: 99%; height: 12em"></textarea>
 	<p>
-	<button id="invia">invia</button>
+	<button id="invia_firebase">invia</button>
+
+	<h1>Test notifiche push via OneSignal</h1>
 
 	<script>
-	
-		const  android_data = {
+
+		//bodies based on platform and notification provider
+		const  android_firebase_data = {
 		"to": "",
 		"data": {
 		      "critical": 1,
@@ -38,7 +42,7 @@
 		"priority":"high"
 		}
 	
-		const  iphone_data = {
+		const  iphone_firebase_data = {
 				"to": "",
 				   "data": {
 				      "critical": 1,
@@ -55,29 +59,48 @@
 				    }
 			}
 
+		const android_onesignal_data = {
+		  "app_id": "",
+		  "include_subscription_ids": [""],
+		  "data": {"foo": "bar"},
+		  "contents": {"en": "Sampple Push Message"}
+		}
+
+		//urls based on notification provider
+		const url_firebase = 'https://fcm.googleapis.com/fcm/send';
+		const url_onesignal = 'https://onesignal.com/api/v1/notifications';
+
 		const t = document.querySelector('textarea');
-		
-		// t.value = JSON.stringify(init_data, null, 3)
-		
 		const b = document.querySelector('#invia');
-		
 		const key_to = document.querySelector('#key_to');
 		
 		// console.log(b)
 		b.onclick = async () => {
-			console.log(t.value)
-			// console.log('prima')
+
+			//get body content from field
 			const data = JSON.parse(t.value)
-			// console.log('dopo')
-			// alert(data.to)
-			
-			
+
+			//get array with server key and token id (firebase) or api key, app id and subscriber id (onesignal)
 			const key_to_arr = key_to.value.split('\|')
+
+			const source = key_to_arr.length() == 2 ? "Firebase" : "OneSignal";
+
+			var auth = "";
+			var url = "";
 			
-			data.to = key_to_arr[1]
-			const auth = "key=" + key_to_arr[0]
+			if(source == "Firebase"){
+			   	data.to = key_to_arr[1];
+			   	auth = "key=" + key_to_arr[0];
+				url = url_firebase;
+			}else if(source == "OneSignal"){
+				auth = "Basic " + key_to_arr[0];
+				data.app_id = key_to_arr[1];
+				data.include_subscription_ids = [key_to_arr[2]];
+				url = url_onesignal;
+			}
 			
-			const response = await fetch('https://fcm.googleapis.com/fcm/send', {
+			
+			const response = await fetch(url, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -91,7 +114,8 @@
 		const select = document.getElementById('and_iph');
 		
 		select.onchange = () => {
-			t.value = JSON.stringify(select.value == 'android' ? android_data : iphone_data, null, 3);
+			//update body
+			t.value = JSON.stringify(select.value == 'android' ? android_firebase_data : select.value == 'iphone' ? iphone_firebase_data : android_onesignal_data, null, 3);
 		}
 		
 		select.onchange();
