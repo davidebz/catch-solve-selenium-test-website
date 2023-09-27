@@ -60,10 +60,23 @@
 			}
 
 		const android_onesignal_data = {
-		  "app_id": "",
-		  "include_subscription_ids": [""],
-		  "data": {"foo": "bar"},
-		  "contents": {"en": "Sampple Push Message"}
+		   "app_id": "",
+		   "include_subscription_ids": [
+		      ""
+		   ],
+		   "data": {
+		        "critical": 1,
+		        "title": "title",
+		      	"subtitle": "subtitle",
+		      	"messageID": 1,
+		      	"messageToken": "1",
+			"notificationID":1,
+		      	"timestamp": 1692356676,
+		      	"source": "OneSignal"
+		   },
+		   "contents": {
+		      "en": "Alert"
+		   }
 		}
 
 		//urls based on notification provider
